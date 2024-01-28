@@ -1,0 +1,1 @@
+int N = sizeof(arr) / sizeof(arr[0]);
