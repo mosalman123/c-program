@@ -58,7 +58,12 @@ int search(struct node *node, int value){
 }
 
 
-
+struct node *minNode(struct node *node){
+    while(node->left!=NULL){
+        node=node->left;
+    }
+    return node;
+}
 //Delete a node from the binary search tree
 struct node *deleteNode(struct node *node,int key){
     if(node==NULL){
@@ -73,11 +78,21 @@ struct node *deleteNode(struct node *node,int key){
     else{
         if(node->left==NULL){
             struct node *temp=node->right;
-            free(root);
-            return temp;
-            
+            free(node);
+            return temp;  
         }
+        if(node->right==NULL){
+            struct node *temp=node->left;
+            free(node);
+            return temp;
+        }
+        struct node *temp=minNode(node->right);
+        node->data=temp->data;
+
+        //delete the root
+        deleteNode(node->right,temp->data);
     }
+    return node;
 }
 int main(){
     int d,choice=1;
